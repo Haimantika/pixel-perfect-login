@@ -254,7 +254,7 @@ const Login = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="anna@gmail.com"
+                placeholder="xyz@gmail.com"
                 className="border-0 border-b border-border rounded-none px-0 focus-visible:ring-0 focus-visible:border-foreground"
               />
             </div>
