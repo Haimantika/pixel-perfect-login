@@ -80,113 +80,101 @@ const Login = () => {
     >
       <div className="bg-white rounded-3xl shadow-xl overflow-hidden flex max-w-4xl w-full">
         {/* Left Panel - Characters */}
-        <div className="w-1/2 bg-[#f5f5f0] p-8 flex flex-col justify-center items-center relative">
-          <div className="relative w-full h-80 flex items-end justify-center gap-1">
+        <div className="w-1/2 bg-[#f5f5f0] p-8 flex flex-col justify-end items-center relative min-h-[500px]">
+          <div className="relative w-full h-72 flex items-end justify-center">
             
-            {/* Orange Character - Half Sun Shape */}
+            {/* Purple Character - Tall irregular quadrilateral (back, tallest) */}
             <div 
-              className={`transition-transform duration-75 ease-out origin-bottom ${isError ? 'animate-shake' : ''}`}
-              style={{ transform: orangeBodyTransform }}
+              className={`absolute left-[15%] bottom-16 transition-transform duration-75 ease-out origin-bottom ${isError ? 'animate-shake' : ''}`}
+              style={{ transform: purpleBodyTransform, zIndex: 1 }}
             >
-              <svg viewBox="0 0 120 70" className="w-28 h-16">
-                {/* Half sun body */}
+              <svg viewBox="0 0 100 200" className="w-32 h-56">
+                {/* Irregular quadrilateral body - tilted */}
                 <path 
-                  d="M0 70 Q60 -20 120 70 Z" 
-                  fill="#F97316" 
+                  d="M20 200 L5 40 L40 0 L95 30 L80 200 Z" 
+                  fill="#8B5CF6" 
                 />
-                {/* Face */}
-                <g className="transition-transform duration-50 ease-out" style={{ transform: `translate(${orangeEyeX}px, ${orangeEyeY}px)` }}>
-                  {/* Left Eye - bigger */}
-                  <circle cx="40" cy="45" r="8" fill="#1a1a2e" />
-                  {/* Right Eye - bigger */}
-                  <circle cx="80" cy="45" r="8" fill="#1a1a2e" />
-                </g>
-                {/* Mouth */}
-                <path 
-                  d={isError ? "M50 58 Q60 52 70 58" : "M50 55 Q60 62 70 55"} 
-                  stroke="#1a1a2e" 
-                  strokeWidth="2.5" 
-                  fill="none"
-                  className="transition-all duration-300"
-                />
-              </svg>
-            </div>
-
-            {/* Yellow Character - Hydrant Shape */}
-            <div 
-              className={`transition-transform duration-75 ease-out origin-bottom ${isError ? 'animate-shake' : ''}`}
-              style={{ transform: yellowBodyTransform, animationDelay: '0.05s' }}
-            >
-              <svg viewBox="0 0 80 100" className="w-20 h-24">
-                {/* Hydrant body - dome top + rectangular body */}
-                <ellipse cx="40" cy="20" rx="30" ry="20" fill="#FBBF24" />
-                <rect x="10" y="20" width="60" height="70" rx="4" fill="#FBBF24" />
-                {/* Side nubs */}
-                <rect x="0" y="40" width="15" height="20" rx="4" fill="#FBBF24" />
-                <rect x="65" y="40" width="15" height="20" rx="4" fill="#FBBF24" />
-                {/* Face */}
-                <g className="transition-transform duration-50 ease-out" style={{ transform: `translate(${yellowEyeX}px, ${yellowEyeY}px)` }}>
-                  {/* Left Eye - bigger line */}
-                  <line x1="22" y1="50" x2="38" y2="50" stroke="#1a1a2e" strokeWidth="4" strokeLinecap="round" />
-                  {/* Right Eye - bigger line */}
-                  <line x1="42" y1="50" x2="58" y2="50" stroke="#1a1a2e" strokeWidth="4" strokeLinecap="round" />
-                </g>
-                {/* Mouth */}
-                <path 
-                  d={isError ? "M30 70 Q40 62 50 70" : "M30 68 Q40 76 50 68"} 
-                  stroke="#1a1a2e" 
-                  strokeWidth="2.5" 
-                  fill="none"
-                  className="transition-all duration-300"
-                />
-              </svg>
-            </div>
-
-            {/* Purple Character - Tall Rectangle (tallest) */}
-            <div 
-              className={`transition-transform duration-75 ease-out origin-bottom ${isError ? 'animate-shake' : ''}`}
-              style={{ transform: purpleBodyTransform, animationDelay: '0.1s' }}
-            >
-              <svg viewBox="0 0 60 180" className="w-14 h-48">
-                {/* Tall rectangle body */}
-                <rect x="5" y="5" width="50" height="170" rx="8" fill="#8B5CF6" />
                 {/* Face */}
                 <g className="transition-transform duration-50 ease-out" style={{ transform: `translate(${purpleEyeX}px, ${purpleEyeY}px)` }}>
-                  {/* Left Eye - bigger */}
-                  <ellipse cx="20" cy="60" rx="8" ry="10" fill="#1a1a2e" />
-                  {/* Right Eye - bigger */}
-                  <ellipse cx="40" cy="60" rx="8" ry="10" fill="#1a1a2e" />
+                  {/* Left Eye - small oval */}
+                  <ellipse cx="35" cy="70" rx="4" ry="5" fill="#1a1a2e" />
+                  {/* Right Eye - small oval */}
+                  <ellipse cx="55" cy="70" rx="4" ry="5" fill="#1a1a2e" />
                 </g>
-                {/* Mouth */}
+                {/* Mouth - curved frown */}
                 <path 
-                  d={isError ? "M20 90 Q30 80 40 90" : "M20 85 Q30 95 40 85"} 
+                  d={isError ? "M35 100 Q45 90 55 100" : "M35 95 Q45 105 55 95"} 
                   stroke="#1a1a2e" 
-                  strokeWidth="3" 
+                  strokeWidth="2.5" 
                   fill="none"
                   className="transition-all duration-300"
                 />
               </svg>
             </div>
 
-            {/* Black Character - Long Rectangle */}
+            {/* Orange Character - Large half dome (front left) */}
             <div 
-              className={`transition-transform duration-75 ease-out origin-bottom ${isError ? 'animate-shake' : ''}`}
-              style={{ transform: blackBodyTransform, animationDelay: '0.15s' }}
+              className={`absolute left-[8%] bottom-0 transition-transform duration-75 ease-out origin-bottom ${isError ? 'animate-shake' : ''}`}
+              style={{ transform: orangeBodyTransform, zIndex: 3 }}
             >
-              <svg viewBox="0 0 50 140" className="w-12 h-36">
-                {/* Long rectangle body */}
-                <rect x="5" y="5" width="40" height="130" rx="6" fill="#1a1a2e" />
+              <svg viewBox="0 0 160 100" className="w-44 h-28">
+                {/* Half dome body */}
+                <ellipse cx="80" cy="100" rx="80" ry="70" fill="#F97316" />
+                {/* Face */}
+                <g className="transition-transform duration-50 ease-out" style={{ transform: `translate(${orangeEyeX}px, ${orangeEyeY}px)` }}>
+                  {/* Left Eye - small dot */}
+                  <circle cx="55" cy="55" r="5" fill="#1a1a2e" />
+                  {/* Right Eye - small dot */}
+                  <circle cx="85" cy="55" r="5" fill="#1a1a2e" />
+                </g>
+                {/* Mouth - curved frown */}
+                <path 
+                  d={isError ? "M60 80 Q72 70 84 80" : "M60 75 Q72 85 84 75"} 
+                  stroke="#1a1a2e" 
+                  strokeWidth="2.5" 
+                  fill="none"
+                  className="transition-all duration-300"
+                />
+              </svg>
+            </div>
+
+            {/* Black Character - Small rounded rectangle (middle) */}
+            <div 
+              className={`absolute left-[38%] bottom-0 transition-transform duration-75 ease-out origin-bottom ${isError ? 'animate-shake' : ''}`}
+              style={{ transform: blackBodyTransform, zIndex: 2 }}
+            >
+              <svg viewBox="0 0 60 90" className="w-16 h-24">
+                {/* Rounded rectangle body */}
+                <rect x="5" y="5" width="50" height="80" rx="8" fill="#1a1a2e" />
                 {/* Face */}
                 <g className="transition-transform duration-50 ease-out" style={{ transform: `translate(${blackEyeX}px, ${blackEyeY}px)` }}>
-                  {/* Left Eye - bigger */}
-                  <ellipse cx="15" cy="45" rx="7" ry="9" fill="white" />
-                  {/* Right Eye - bigger */}
-                  <ellipse cx="35" cy="45" rx="7" ry="9" fill="white" />
+                  {/* Left Eye - small white oval */}
+                  <ellipse cx="20" cy="35" rx="4" ry="5" fill="white" />
+                  {/* Right Eye - small white oval */}
+                  <ellipse cx="40" cy="35" rx="4" ry="5" fill="white" />
                 </g>
-                {/* Mouth */}
+                {/* No visible mouth on black character in reference */}
+              </svg>
+            </div>
+
+            {/* Yellow Character - Rounded pill shape (front right) */}
+            <div 
+              className={`absolute right-[12%] bottom-0 transition-transform duration-75 ease-out origin-bottom ${isError ? 'animate-shake' : ''}`}
+              style={{ transform: yellowBodyTransform, zIndex: 2 }}
+            >
+              <svg viewBox="0 0 80 130" className="w-24 h-36">
+                {/* Pill/rounded rectangle body */}
+                <rect x="5" y="5" width="70" height="120" rx="35" fill="#FBBF24" />
+                {/* Face */}
+                <g className="transition-transform duration-50 ease-out" style={{ transform: `translate(${yellowEyeX}px, ${yellowEyeY}px)` }}>
+                  {/* Eyes - horizontal lines */}
+                  <line x1="25" y1="50" x2="35" y2="50" stroke="#1a1a2e" strokeWidth="3" strokeLinecap="round" />
+                  <line x1="45" y1="50" x2="55" y2="50" stroke="#1a1a2e" strokeWidth="3" strokeLinecap="round" />
+                </g>
+                {/* Mouth - wavy/squiggly line */}
                 <path 
-                  d={isError ? "M15 75 Q25 65 35 75" : "M15 70 Q25 80 35 70"} 
-                  stroke="white" 
+                  d={isError ? "M25 80 Q32 75 40 80 Q48 85 55 80" : "M25 75 Q32 80 40 75 Q48 70 55 75"} 
+                  stroke="#1a1a2e" 
                   strokeWidth="2.5" 
                   fill="none"
                   className="transition-all duration-300"
@@ -195,7 +183,7 @@ const Login = () => {
             </div>
           </div>
           
-          <p className="text-[#c4c4c0] text-4xl font-bold mt-8 tracking-wider">ZDAK</p>
+          <p className="text-[#c4c4c0] text-4xl font-bold mt-4 tracking-wider">ZDAK</p>
         </div>
 
         {/* Right Panel - Login Form */}
