@@ -59,75 +59,74 @@ const Login = () => {
   // Calculate eye positions for each character
   const purpleEyeX = showPassword ? lookLeftOffsetX : eyeOffsetX;
   const purpleEyeY = showPassword ? lookLeftOffsetY : eyeOffsetY;
-  
+
   const orangeEyeX = showPassword ? lookLeftOffsetX : eyeOffsetX;
   const orangeEyeY = showPassword ? lookLeftOffsetY : eyeOffsetY;
-  
+
   const blackEyeX = eyeOffsetX;
   const blackEyeY = eyeOffsetY;
-  
+
   const yellowEyeX = showPassword ? lookLeftOffsetX : eyeOffsetX;
   const yellowEyeY = showPassword ? lookLeftOffsetY : eyeOffsetY;
 
   // Body transforms
-  const orangeBodyTransform = showPassword 
-    ? 'translate(-6px, 0) rotate(-3deg)' 
+  const orangeBodyTransform = showPassword
+    ? "translate(-6px, 0) rotate(-3deg)"
     : `translate(${bodyMoveX * 0.6}px, ${bodyMoveY * 0.4}px) rotate(${bodyRotation * 0.4}deg)`;
-  
-  const yellowBodyTransform = showPassword 
-    ? 'translate(-8px, 0) rotate(-4deg)' 
+
+  const yellowBodyTransform = showPassword
+    ? "translate(-8px, 0) rotate(-4deg)"
     : `translate(${bodyMoveX * 0.7}px, ${bodyMoveY * 0.5}px) rotate(${bodyRotation * 0.5}deg)`;
-  
-  const purpleBodyTransform = showPassword 
-    ? 'translate(-5px, 0) rotate(-2deg)' 
+
+  const purpleBodyTransform = showPassword
+    ? "translate(-5px, 0) rotate(-2deg)"
     : `translate(${bodyMoveX * 0.5}px, ${bodyMoveY * 0.3}px) rotate(${bodyRotation * 0.3}deg)`;
-  
+
   const blackBodyTransform = `translate(${bodyMoveX * 0.4}px, ${bodyMoveY * 0.3}px) rotate(${bodyRotation * 0.2}deg)`;
 
   // Eye height for blinking
   const eyeScaleY = isBlinking ? 0.1 : 1;
 
   return (
-    <div 
-      ref={containerRef}
-      className="min-h-screen bg-[#f5f5f0] flex items-center justify-center p-4"
-    >
+    <div ref={containerRef} className="min-h-screen bg-[#f5f5f0] flex items-center justify-center p-4">
       <div className="bg-white rounded-3xl shadow-xl overflow-hidden flex max-w-4xl w-full">
         {/* Left Panel - Characters */}
         <div className="w-1/2 bg-[#f5f5f0] p-8 flex flex-col justify-end items-start relative min-h-[520px]">
           <div className="relative w-[320px] h-[280px] ml-6 mb-2">
-            
             {/* Purple Character - Tall irregular quadrilateral (back, behind orange) */}
-            <div 
-              className={`absolute left-[70px] bottom-[80px] transition-transform duration-100 ease-out origin-bottom ${isError ? 'animate-shake' : ''}`}
+            <div
+              className={`absolute left-[70px] bottom-[80px] transition-transform duration-100 ease-out origin-bottom ${isError ? "animate-shake" : ""}`}
               style={{ transform: purpleBodyTransform, zIndex: 1 }}
             >
               <svg viewBox="0 0 90 180" className="w-[100px] h-[200px]">
                 {/* Irregular quadrilateral body - tilted left */}
-                <path 
-                  d="M20 180 L0 45 L30 0 L90 15 L75 180 Z" 
-                  fill="#8B5CF6" 
-                />
+                <path d="M20 180 L0 45 L30 0 L90 15 L75 180 Z" fill="#8B5CF6" />
                 {/* Face */}
                 <g style={{ transform: `translate(${purpleEyeX}px, ${purpleEyeY}px)` }}>
                   {/* Left Eye */}
-                  <ellipse 
-                    cx="32" cy="55" rx="5" ry={6 * eyeScaleY} 
-                    fill="#1a1a2e" 
-                    style={{ transition: 'ry 0.1s ease' }}
+                  <ellipse
+                    cx="32"
+                    cy="55"
+                    rx="5"
+                    ry={6 * eyeScaleY}
+                    fill="#1a1a2e"
+                    style={{ transition: "ry 0.1s ease" }}
                   />
                   {/* Right Eye */}
-                  <ellipse 
-                    cx="55" cy="55" rx="5" ry={6 * eyeScaleY} 
-                    fill="#1a1a2e" 
-                    style={{ transition: 'ry 0.1s ease' }}
+                  <ellipse
+                    cx="55"
+                    cy="55"
+                    rx="5"
+                    ry={6 * eyeScaleY}
+                    fill="#1a1a2e"
+                    style={{ transition: "ry 0.1s ease" }}
                   />
                 </g>
                 {/* Mouth */}
-                <path 
-                  d={isError ? "M32 85 Q43 75 55 85" : "M32 80 Q43 90 55 80"} 
-                  stroke="#1a1a2e" 
-                  strokeWidth="2.5" 
+                <path
+                  d={isError ? "M32 85 Q43 75 55 85" : "M32 80 Q43 90 55 80"}
+                  stroke="#1a1a2e"
+                  strokeWidth="2.5"
                   fill="none"
                   className="transition-all duration-300"
                 />
@@ -135,8 +134,8 @@ const Login = () => {
             </div>
 
             {/* Orange Character - Large half dome (front left, bottom) */}
-            <div 
-              className={`absolute left-0 bottom-0 transition-transform duration-100 ease-out origin-bottom ${isError ? 'animate-shake' : ''}`}
+            <div
+              className={`absolute left-0 bottom-0 transition-transform duration-100 ease-out origin-bottom ${isError ? "animate-shake" : ""}`}
               style={{ transform: orangeBodyTransform, zIndex: 3 }}
             >
               <svg viewBox="0 0 200 120" className="w-[180px] h-[110px]">
@@ -145,23 +144,29 @@ const Login = () => {
                 {/* Face */}
                 <g style={{ transform: `translate(${orangeEyeX}px, ${orangeEyeY}px)` }}>
                   {/* Left Eye */}
-                  <ellipse 
-                    cx="70" cy="60" rx="6" ry={7 * eyeScaleY} 
-                    fill="#1a1a2e" 
-                    style={{ transition: 'ry 0.1s ease' }}
+                  <ellipse
+                    cx="70"
+                    cy="60"
+                    rx="6"
+                    ry={7 * eyeScaleY}
+                    fill="#1a1a2e"
+                    style={{ transition: "ry 0.1s ease" }}
                   />
                   {/* Right Eye */}
-                  <ellipse 
-                    cx="115" cy="60" rx="6" ry={7 * eyeScaleY} 
-                    fill="#1a1a2e" 
-                    style={{ transition: 'ry 0.1s ease' }}
+                  <ellipse
+                    cx="115"
+                    cy="60"
+                    rx="6"
+                    ry={7 * eyeScaleY}
+                    fill="#1a1a2e"
+                    style={{ transition: "ry 0.1s ease" }}
                   />
                 </g>
                 {/* Mouth */}
-                <path 
-                  d={isError ? "M80 90 Q93 80 106 90" : "M80 85 Q93 95 106 85"} 
-                  stroke="#1a1a2e" 
-                  strokeWidth="2.5" 
+                <path
+                  d={isError ? "M80 90 Q93 80 106 90" : "M80 85 Q93 95 106 85"}
+                  stroke="#1a1a2e"
+                  strokeWidth="2.5"
                   fill="none"
                   className="transition-all duration-300"
                 />
@@ -169,8 +174,8 @@ const Login = () => {
             </div>
 
             {/* Black Character - Small rounded rectangle (middle, between orange and yellow) */}
-            <div 
-              className={`absolute left-[145px] bottom-0 transition-transform duration-100 ease-out origin-bottom ${isError ? 'animate-shake' : ''}`}
+            <div
+              className={`absolute left-[145px] bottom-0 transition-transform duration-100 ease-out origin-bottom ${isError ? "animate-shake" : ""}`}
               style={{ transform: blackBodyTransform, zIndex: 2 }}
             >
               <svg viewBox="0 0 50 80" className="w-[55px] h-[90px]">
@@ -179,24 +184,30 @@ const Login = () => {
                 {/* Face */}
                 <g style={{ transform: `translate(${blackEyeX}px, ${blackEyeY}px)` }}>
                   {/* Left Eye */}
-                  <ellipse 
-                    cx="16" cy="30" rx="4" ry={5 * eyeScaleY} 
-                    fill="white" 
-                    style={{ transition: 'ry 0.1s ease' }}
+                  <ellipse
+                    cx="16"
+                    cy="30"
+                    rx="4"
+                    ry={5 * eyeScaleY}
+                    fill="white"
+                    style={{ transition: "ry 0.1s ease" }}
                   />
                   {/* Right Eye */}
-                  <ellipse 
-                    cx="34" cy="30" rx="4" ry={5 * eyeScaleY} 
-                    fill="white" 
-                    style={{ transition: 'ry 0.1s ease' }}
+                  <ellipse
+                    cx="34"
+                    cy="30"
+                    rx="4"
+                    ry={5 * eyeScaleY}
+                    fill="white"
+                    style={{ transition: "ry 0.1s ease" }}
                   />
                 </g>
               </svg>
             </div>
 
             {/* Yellow Character - Rounded pill shape (right side) */}
-            <div 
-              className={`absolute left-[195px] bottom-0 transition-transform duration-100 ease-out origin-bottom ${isError ? 'animate-shake' : ''}`}
+            <div
+              className={`absolute left-[195px] bottom-0 transition-transform duration-100 ease-out origin-bottom ${isError ? "animate-shake" : ""}`}
               style={{ transform: yellowBodyTransform, zIndex: 2 }}
             >
               <svg viewBox="0 0 70 115" className="w-[75px] h-[120px]">
@@ -205,28 +216,20 @@ const Login = () => {
                 {/* Face */}
                 <g style={{ transform: `translate(${yellowEyeX}px, ${yellowEyeY}px)` }}>
                   {/* Eyes - horizontal lines (squinting) */}
-                  <line 
-                    x1="18" y1="42" x2="28" y2="42" 
-                    stroke="#1a1a2e" strokeWidth="3" strokeLinecap="round" 
-                  />
-                  <line 
-                    x1="40" y1="42" x2="50" y2="42" 
-                    stroke="#1a1a2e" strokeWidth="3" strokeLinecap="round" 
-                  />
+                  <line x1="18" y1="42" x2="28" y2="42" stroke="#1a1a2e" strokeWidth="3" strokeLinecap="round" />
+                  <line x1="40" y1="42" x2="50" y2="42" stroke="#1a1a2e" strokeWidth="3" strokeLinecap="round" />
                 </g>
                 {/* Mouth - wavy squiggle */}
-                <path 
-                  d={isError ? "M20 68 Q28 62 35 68 Q42 74 50 68" : "M20 65 Q28 70 35 65 Q42 60 50 65"} 
-                  stroke="#1a1a2e" 
-                  strokeWidth="2.5" 
+                <path
+                  d={isError ? "M20 68 Q28 62 35 68 Q42 74 50 68" : "M20 65 Q28 70 35 65 Q42 60 50 65"}
+                  stroke="#1a1a2e"
+                  strokeWidth="2.5"
                   fill="none"
                   className="transition-all duration-300"
                 />
               </svg>
             </div>
           </div>
-          
-          <p className="text-[#c4c4c0] text-4xl font-bold ml-6 tracking-wider">ZDAK</p>
         </div>
 
         {/* Right Panel - Login Form */}
@@ -257,7 +260,7 @@ const Login = () => {
             </div>
 
             <div>
-              <label className={`text-sm mb-1.5 block ${isError ? 'text-red-500' : 'text-muted-foreground'}`}>
+              <label className={`text-sm mb-1.5 block ${isError ? "text-red-500" : "text-muted-foreground"}`}>
                 Password
               </label>
               <div className="relative">
@@ -267,7 +270,9 @@ const Login = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••"
                   className={`border-0 border-b rounded-none px-0 pr-10 focus-visible:ring-0 ${
-                    isError ? 'border-red-500 focus-visible:border-red-500' : 'border-border focus-visible:border-foreground'
+                    isError
+                      ? "border-red-500 focus-visible:border-red-500"
+                      : "border-border focus-visible:border-foreground"
                   }`}
                 />
                 <button
@@ -292,18 +297,14 @@ const Login = () => {
               </a>
             </div>
 
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full bg-foreground text-background hover:bg-foreground/90 rounded-lg h-11"
             >
               Log in
             </Button>
 
-            <Button 
-              type="button" 
-              variant="outline" 
-              className="w-full rounded-lg h-11 gap-2"
-            >
+            <Button type="button" variant="outline" className="w-full rounded-lg h-11 gap-2">
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path
                   fill="#4285F4"
