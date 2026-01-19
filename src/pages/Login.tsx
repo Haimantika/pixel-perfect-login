@@ -31,16 +31,17 @@ const Login = () => {
     setTimeout(() => setIsError(false), 2000);
   };
 
-  // Enhanced eye tracking - more pronounced movement
-  const eyeOffsetX = (mousePos.x - 0.5) * 12;
-  const eyeOffsetY = (mousePos.y - 0.5) * 8;
+  // Enhanced eye tracking - bigger movement
+  const eyeOffsetX = (mousePos.x - 0.5) * 16;
+  const eyeOffsetY = (mousePos.y - 0.5) * 10;
 
-  // Body movement - subtle sway following cursor
-  const bodyRotation = (mousePos.x - 0.5) * 8;
-  const bodyTiltY = (mousePos.y - 0.5) * 4;
+  // Body movement - all characters move toward cursor
+  const bodyMoveX = (mousePos.x - 0.5) * 20;
+  const bodyMoveY = (mousePos.y - 0.5) * 10;
+  const bodyRotation = (mousePos.x - 0.5) * 6;
 
   // When showing password, all except black character look left
-  const lookLeftOffsetX = -10;
+  const lookLeftOffsetX = -12;
   const lookLeftOffsetY = 0;
 
   // Calculate eye positions for each character
@@ -57,20 +58,20 @@ const Login = () => {
   const yellowEyeX = showPassword ? lookLeftOffsetX : eyeOffsetX;
   const yellowEyeY = showPassword ? lookLeftOffsetY : eyeOffsetY;
 
-  // Body transforms for each character (slight offset for natural feel)
-  const purpleBodyTransform = showPassword 
-    ? 'rotate(-5deg) translateY(2px)' 
-    : `rotate(${bodyRotation * 0.8}deg) translateY(${bodyTiltY}px)`;
-  
+  // Body transforms - all move toward cursor
   const orangeBodyTransform = showPassword 
-    ? 'rotate(-4deg) translateY(1px)' 
-    : `rotate(${bodyRotation * 0.6}deg) translateY(${bodyTiltY * 0.8}px)`;
-  
-  const blackBodyTransform = `rotate(${bodyRotation * 0.5}deg) translateY(${bodyTiltY * 0.6}px)`;
+    ? 'translate(-8px, 0) rotate(-4deg)' 
+    : `translate(${bodyMoveX * 0.8}px, ${bodyMoveY * 0.6}px) rotate(${bodyRotation * 0.5}deg)`;
   
   const yellowBodyTransform = showPassword 
-    ? 'rotate(-6deg) translateY(2px)' 
-    : `rotate(${bodyRotation * 0.7}deg) translateY(${bodyTiltY * 0.9}px)`;
+    ? 'translate(-10px, 0) rotate(-5deg)' 
+    : `translate(${bodyMoveX * 0.9}px, ${bodyMoveY * 0.7}px) rotate(${bodyRotation * 0.6}deg)`;
+  
+  const purpleBodyTransform = showPassword 
+    ? 'translate(-6px, 0) rotate(-3deg)' 
+    : `translate(${bodyMoveX * 0.7}px, ${bodyMoveY * 0.5}px) rotate(${bodyRotation * 0.4}deg)`;
+  
+  const blackBodyTransform = `translate(${bodyMoveX * 0.6}px, ${bodyMoveY * 0.4}px) rotate(${bodyRotation * 0.3}deg)`;
 
   return (
     <div 
@@ -80,28 +81,85 @@ const Login = () => {
       <div className="bg-white rounded-3xl shadow-xl overflow-hidden flex max-w-4xl w-full">
         {/* Left Panel - Characters */}
         <div className="w-1/2 bg-[#f5f5f0] p-8 flex flex-col justify-center items-center relative">
-          <div className="relative w-full h-80 flex items-end justify-center gap-2">
-            {/* Purple Character */}
+          <div className="relative w-full h-80 flex items-end justify-center gap-1">
+            
+            {/* Orange Character - Half Sun Shape */}
             <div 
-              className={`transition-transform duration-100 ease-out origin-bottom ${isError ? 'animate-shake' : ''}`}
-              style={{ transform: purpleBodyTransform }}
+              className={`transition-transform duration-75 ease-out origin-bottom ${isError ? 'animate-shake' : ''}`}
+              style={{ transform: orangeBodyTransform }}
             >
-              <svg viewBox="0 0 120 180" className="w-28 h-44">
-                {/* Body */}
+              <svg viewBox="0 0 120 70" className="w-28 h-16">
+                {/* Half sun body */}
                 <path 
-                  d="M20 180 L40 20 Q60 0 80 20 L100 180 Z" 
-                  fill="#8B5CF6" 
+                  d="M0 70 Q60 -20 120 70 Z" 
+                  fill="#F97316" 
                 />
                 {/* Face */}
-                <g className="transition-transform duration-75 ease-out" style={{ transform: `translate(${purpleEyeX}px, ${purpleEyeY}px)` }}>
-                  {/* Left Eye */}
-                  <ellipse cx="50" cy="80" rx="6" ry="8" fill="#1a1a2e" />
-                  {/* Right Eye */}
-                  <ellipse cx="70" cy="80" rx="6" ry="8" fill="#1a1a2e" />
+                <g className="transition-transform duration-50 ease-out" style={{ transform: `translate(${orangeEyeX}px, ${orangeEyeY}px)` }}>
+                  {/* Left Eye - bigger */}
+                  <circle cx="40" cy="45" r="8" fill="#1a1a2e" />
+                  {/* Right Eye - bigger */}
+                  <circle cx="80" cy="45" r="8" fill="#1a1a2e" />
                 </g>
                 {/* Mouth */}
                 <path 
-                  d={isError ? "M50 110 Q60 100 70 110" : "M50 105 Q60 115 70 105"} 
+                  d={isError ? "M50 58 Q60 52 70 58" : "M50 55 Q60 62 70 55"} 
+                  stroke="#1a1a2e" 
+                  strokeWidth="2.5" 
+                  fill="none"
+                  className="transition-all duration-300"
+                />
+              </svg>
+            </div>
+
+            {/* Yellow Character - Hydrant Shape */}
+            <div 
+              className={`transition-transform duration-75 ease-out origin-bottom ${isError ? 'animate-shake' : ''}`}
+              style={{ transform: yellowBodyTransform, animationDelay: '0.05s' }}
+            >
+              <svg viewBox="0 0 80 100" className="w-20 h-24">
+                {/* Hydrant body - dome top + rectangular body */}
+                <ellipse cx="40" cy="20" rx="30" ry="20" fill="#FBBF24" />
+                <rect x="10" y="20" width="60" height="70" rx="4" fill="#FBBF24" />
+                {/* Side nubs */}
+                <rect x="0" y="40" width="15" height="20" rx="4" fill="#FBBF24" />
+                <rect x="65" y="40" width="15" height="20" rx="4" fill="#FBBF24" />
+                {/* Face */}
+                <g className="transition-transform duration-50 ease-out" style={{ transform: `translate(${yellowEyeX}px, ${yellowEyeY}px)` }}>
+                  {/* Left Eye - bigger line */}
+                  <line x1="22" y1="50" x2="38" y2="50" stroke="#1a1a2e" strokeWidth="4" strokeLinecap="round" />
+                  {/* Right Eye - bigger line */}
+                  <line x1="42" y1="50" x2="58" y2="50" stroke="#1a1a2e" strokeWidth="4" strokeLinecap="round" />
+                </g>
+                {/* Mouth */}
+                <path 
+                  d={isError ? "M30 70 Q40 62 50 70" : "M30 68 Q40 76 50 68"} 
+                  stroke="#1a1a2e" 
+                  strokeWidth="2.5" 
+                  fill="none"
+                  className="transition-all duration-300"
+                />
+              </svg>
+            </div>
+
+            {/* Purple Character - Tall Rectangle (tallest) */}
+            <div 
+              className={`transition-transform duration-75 ease-out origin-bottom ${isError ? 'animate-shake' : ''}`}
+              style={{ transform: purpleBodyTransform, animationDelay: '0.1s' }}
+            >
+              <svg viewBox="0 0 60 180" className="w-14 h-48">
+                {/* Tall rectangle body */}
+                <rect x="5" y="5" width="50" height="170" rx="8" fill="#8B5CF6" />
+                {/* Face */}
+                <g className="transition-transform duration-50 ease-out" style={{ transform: `translate(${purpleEyeX}px, ${purpleEyeY}px)` }}>
+                  {/* Left Eye - bigger */}
+                  <ellipse cx="20" cy="60" rx="8" ry="10" fill="#1a1a2e" />
+                  {/* Right Eye - bigger */}
+                  <ellipse cx="40" cy="60" rx="8" ry="10" fill="#1a1a2e" />
+                </g>
+                {/* Mouth */}
+                <path 
+                  d={isError ? "M20 90 Q30 80 40 90" : "M20 85 Q30 95 40 85"} 
                   stroke="#1a1a2e" 
                   strokeWidth="3" 
                   fill="none"
@@ -110,77 +168,25 @@ const Login = () => {
               </svg>
             </div>
 
-            {/* Orange Character */}
+            {/* Black Character - Long Rectangle */}
             <div 
-              className={`transition-transform duration-100 ease-out origin-bottom ${isError ? 'animate-shake' : ''}`}
-              style={{ transform: orangeBodyTransform, animationDelay: '0.05s' }}
+              className={`transition-transform duration-75 ease-out origin-bottom ${isError ? 'animate-shake' : ''}`}
+              style={{ transform: blackBodyTransform, animationDelay: '0.15s' }}
             >
-              <svg viewBox="0 0 140 120" className="w-32 h-28">
-                {/* Body */}
-                <ellipse cx="70" cy="70" rx="65" ry="50" fill="#F97316" />
+              <svg viewBox="0 0 50 140" className="w-12 h-36">
+                {/* Long rectangle body */}
+                <rect x="5" y="5" width="40" height="130" rx="6" fill="#1a1a2e" />
                 {/* Face */}
-                <g className="transition-transform duration-75 ease-out" style={{ transform: `translate(${orangeEyeX}px, ${orangeEyeY}px)` }}>
-                  {/* Left Eye */}
-                  <circle cx="45" cy="55" r="5" fill="#1a1a2e" />
-                  {/* Right Eye */}
-                  <circle cx="75" cy="55" r="5" fill="#1a1a2e" />
+                <g className="transition-transform duration-50 ease-out" style={{ transform: `translate(${blackEyeX}px, ${blackEyeY}px)` }}>
+                  {/* Left Eye - bigger */}
+                  <ellipse cx="15" cy="45" rx="7" ry="9" fill="white" />
+                  {/* Right Eye - bigger */}
+                  <ellipse cx="35" cy="45" rx="7" ry="9" fill="white" />
                 </g>
                 {/* Mouth */}
                 <path 
-                  d={isError ? "M50 80 Q60 70 70 80" : "M50 75 Q60 85 70 75"} 
-                  stroke="#1a1a2e" 
-                  strokeWidth="2.5" 
-                  fill="none"
-                  className="transition-all duration-300"
-                />
-              </svg>
-            </div>
-
-            {/* Black Character */}
-            <div 
-              className={`transition-transform duration-100 ease-out origin-bottom ${isError ? 'animate-shake' : ''}`}
-              style={{ transform: blackBodyTransform, animationDelay: '0.1s' }}
-            >
-              <svg viewBox="0 0 100 140" className="w-24 h-32">
-                {/* Body */}
-                <rect x="10" y="20" width="80" height="100" rx="8" fill="#1a1a2e" />
-                {/* Face */}
-                <g className="transition-transform duration-75 ease-out" style={{ transform: `translate(${blackEyeX}px, ${blackEyeY}px)` }}>
-                  {/* Left Eye */}
-                  <ellipse cx="35" cy="55" rx="5" ry="6" fill="white" />
-                  {/* Right Eye */}
-                  <ellipse cx="65" cy="55" rx="5" ry="6" fill="white" />
-                </g>
-                {/* Mouth */}
-                <path 
-                  d={isError ? "M40 85 Q50 75 60 85" : "M40 80 Q50 90 60 80"} 
+                  d={isError ? "M15 75 Q25 65 35 75" : "M15 70 Q25 80 35 70"} 
                   stroke="white" 
-                  strokeWidth="2.5" 
-                  fill="none"
-                  className="transition-all duration-300"
-                />
-              </svg>
-            </div>
-
-            {/* Yellow Character */}
-            <div 
-              className={`transition-transform duration-100 ease-out origin-bottom ${isError ? 'animate-shake' : ''}`}
-              style={{ transform: yellowBodyTransform, animationDelay: '0.15s' }}
-            >
-              <svg viewBox="0 0 100 130" className="w-24 h-32">
-                {/* Body */}
-                <rect x="10" y="10" width="80" height="110" rx="12" fill="#FBBF24" />
-                {/* Face */}
-                <g className="transition-transform duration-75 ease-out" style={{ transform: `translate(${yellowEyeX}px, ${yellowEyeY}px)` }}>
-                  {/* Left Eye - line */}
-                  <line x1="30" y1="50" x2="42" y2="50" stroke="#1a1a2e" strokeWidth="3" strokeLinecap="round" />
-                  {/* Right Eye - line */}
-                  <line x1="58" y1="50" x2="70" y2="50" stroke="#1a1a2e" strokeWidth="3" strokeLinecap="round" />
-                </g>
-                {/* Mouth */}
-                <path 
-                  d={isError ? "M40 80 Q50 70 60 80" : "M40 75 Q50 85 60 75"} 
-                  stroke="#1a1a2e" 
                   strokeWidth="2.5" 
                   fill="none"
                   className="transition-all duration-300"
