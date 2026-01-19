@@ -8,14 +8,13 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [isError, setIsError] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (containerRef.current && !isPasswordFocused) {
+      if (containerRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width;
         const y = (e.clientY - rect.top) / rect.height;
@@ -24,7 +23,7 @@ const Login = () => {
     };
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [isPasswordFocused]);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,8 +32,27 @@ const Login = () => {
     setTimeout(() => setIsError(false), 2000);
   };
 
-  const eyeOffsetX = isPasswordFocused ? -4 : (mousePos.x - 0.5) * 6;
-  const eyeOffsetY = isPasswordFocused ? 2 : (mousePos.y - 0.5) * 4;
+  // Normal eye tracking based on cursor
+  const eyeOffsetX = (mousePos.x - 0.5) * 8;
+  const eyeOffsetY = (mousePos.y - 0.5) * 5;
+
+  // When showing password, all except black character look left
+  const lookLeftOffsetX = -8;
+  const lookLeftOffsetY = 0;
+
+  // Calculate eye positions for each character
+  const purpleEyeX = showPassword ? lookLeftOffsetX : eyeOffsetX;
+  const purpleEyeY = showPassword ? lookLeftOffsetY : eyeOffsetY;
+  
+  const orangeEyeX = showPassword ? lookLeftOffsetX : eyeOffsetX;
+  const orangeEyeY = showPassword ? lookLeftOffsetY : eyeOffsetY;
+  
+  // Black character always follows cursor (doesn't look left)
+  const blackEyeX = eyeOffsetX;
+  const blackEyeY = eyeOffsetY;
+  
+  const yellowEyeX = showPassword ? lookLeftOffsetX : eyeOffsetX;
+  const yellowEyeY = showPassword ? lookLeftOffsetY : eyeOffsetY;
 
   return (
     <div 
@@ -56,7 +74,7 @@ const Login = () => {
                 fill="#8B5CF6" 
               />
               {/* Face */}
-              <g transform={`translate(${eyeOffsetX}, ${eyeOffsetY})`}>
+              <g className="transition-transform duration-150" style={{ transform: `translate(${purpleEyeX}px, ${purpleEyeY}px)` }}>
                 {/* Left Eye */}
                 <ellipse cx="50" cy="80" rx="6" ry="8" fill="#1a1a2e" />
                 {/* Right Eye */}
@@ -81,7 +99,7 @@ const Login = () => {
               {/* Body */}
               <ellipse cx="70" cy="70" rx="65" ry="50" fill="#F97316" />
               {/* Face */}
-              <g transform={`translate(${eyeOffsetX}, ${eyeOffsetY})`}>
+              <g className="transition-transform duration-150" style={{ transform: `translate(${orangeEyeX}px, ${orangeEyeY}px)` }}>
                 {/* Left Eye */}
                 <circle cx="45" cy="55" r="5" fill="#1a1a2e" />
                 {/* Right Eye */}
@@ -105,8 +123,8 @@ const Login = () => {
             >
               {/* Body */}
               <rect x="10" y="20" width="80" height="100" rx="8" fill="#1a1a2e" />
-              {/* Face */}
-              <g transform={`translate(${eyeOffsetX}, ${eyeOffsetY})`}>
+              {/* Face - Black character always follows cursor */}
+              <g className="transition-transform duration-150" style={{ transform: `translate(${blackEyeX}px, ${blackEyeY}px)` }}>
                 {/* Left Eye */}
                 <ellipse cx="35" cy="55" rx="5" ry="6" fill="white" />
                 {/* Right Eye */}
@@ -131,7 +149,7 @@ const Login = () => {
               {/* Body */}
               <rect x="10" y="10" width="80" height="110" rx="12" fill="#FBBF24" />
               {/* Face */}
-              <g transform={`translate(${eyeOffsetX}, ${eyeOffsetY})`}>
+              <g className="transition-transform duration-150" style={{ transform: `translate(${yellowEyeX}px, ${yellowEyeY}px)` }}>
                 {/* Left Eye - line */}
                 <line x1="30" y1="50" x2="42" y2="50" stroke="#1a1a2e" strokeWidth="3" strokeLinecap="round" />
                 {/* Right Eye - line */}
@@ -187,8 +205,6 @@ const Login = () => {
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  onFocus={() => setIsPasswordFocused(true)}
-                  onBlur={() => setIsPasswordFocused(false)}
                   placeholder="••••••••••"
                   className={`border-0 border-b rounded-none px-0 pr-10 focus-visible:ring-0 ${
                     isError ? 'border-red-500 focus-visible:border-red-500' : 'border-border focus-visible:border-foreground'
